@@ -104,3 +104,20 @@ class ConsoleListInterface(object):
             if event in self.keyhandlers:
                 self.keyhandlers[event]()
 
+
+"""
+    The data that is passed into this interface must have a boolean field 'selected' and should
+    have a __repr__ method that returns a short representaion of the object as well as showing if it
+    is selected or not
+"""
+class SelectableConsoleListInterface(ConsoleListInterface):
+
+    def __init__(self, data):
+        super(SelectableConsoleListInterface, self).__init__(data)
+        self.keyhandlers[ord('x')] = self.select_item
+
+
+    def select_item(self):
+        self.data[self.current_selection_index].selected = not self.data[self.current_selection_index].selected
+        self.draw()
+
