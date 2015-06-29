@@ -2,6 +2,8 @@
 A selectable, scrollable list interface for terminal applications built using curses.
 I extracted this from another project of mine so I could reuse it easier for more projects.
 
+![screenshot](http://i.imgur.com/PEi3Q98.png)
+
 ## How to use scli
 Copy the source file into your project however you want. I couldn't be bothered coming up with a better way so this will have to do sorry.
 
