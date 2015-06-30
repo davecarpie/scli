@@ -3,7 +3,7 @@ import sys
 
 class ConsoleListInterface(object):
 
-    def __init__(self, data):
+    def __init__(self, window, data):
         self.data = data
 
         self.current_selection_index = 0
@@ -12,7 +12,7 @@ class ConsoleListInterface(object):
 
         self.init_keyhandlers()
 
-        self.screen = curses.initscr()
+        self.screen = window
         curses.noecho()
         curses.curs_set(0)
         self.screen.keypad(1)
@@ -53,7 +53,6 @@ class ConsoleListInterface(object):
 
     def init_keyhandlers(self):
         self.keyhandlers = {
-            ord("q") : self.quit,
             curses.KEY_DOWN : self.move_down,
             curses.KEY_UP : self.move_up
         }
@@ -94,13 +93,12 @@ class ConsoleListInterface(object):
         self.draw()
 
 
-    def quit(self):
-        sys.exit()
-
-
     def mainloop(self):
         while True:
             event = self.screen.getch()
+            if event == ord('q'):
+                return
+                
             if event in self.keyhandlers:
                 self.keyhandlers[event]()
 
@@ -112,8 +110,8 @@ class ConsoleListInterface(object):
 """
 class SelectableConsoleListInterface(ConsoleListInterface):
 
-    def __init__(self, data):
-        super(SelectableConsoleListInterface, self).__init__(data)
+    def __init__(self, window, data):
+        super(SelectableConsoleListInterface, self).__init__(window, data)
         self.keyhandlers[ord('x')] = self.select_item
 
 
